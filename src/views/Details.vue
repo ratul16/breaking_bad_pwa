@@ -39,17 +39,13 @@
               px-10
               rounded
             "
-            @click="quote = !quote"
+            @click="getQuote()"
           >
             See Quote
           </button>
           <transition name="bounce">
-            <blockquote v-if="quote">
-              <p class="text-lg font-semibold">
-                “Tailwind CSS is the only framework that I've seen scale on
-                large teams. It’s easy to customize, adapts to any design, and
-                the build size is tiny.”
-              </p>
+            <blockquote v-if="loading">
+              <p class="text-lg font-semibold">“{{ quotes }}”</p>
             </blockquote>
           </transition>
         </div>
@@ -103,12 +99,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Info",
   data() {
     return {
-      quote: false,
-      name: "",
+      loading: false,
+      quotes: "",
     };
   },
   computed: {
@@ -116,41 +114,60 @@ export default {
       let data = this.$store.getters.getDetails;
 
       let result = data.filter((x) => {
-        return x.name == this.$route.params.name;
+        return x.char_id == this.$route.params.id;
       });
 
       this.name = result[0].name;
 
       return result[0];
     },
-    // getDetails() {
-    //   let data = this.$store.getters.getDetails;
-
-    //   let result = data.filter((x) => {
-    //     return x.name == this.$route.params.name;
-    //   });
-
-    //   this.name = result[0].name;
-
-    //   return result[0];
-    // },
   },
 
-  created: function () {
-    let data = this.$store.getters.getQuotes;
+  methods: {
+    async getQuote() {
+      this.loading = false;
+      let author = this.$route.params.name.replace(/ /g, "+");
+      let url = `https://www.breakingbadapi.com/api/quote/random?author=${author}`;
 
-    let result = data.filter((x) => {
-      return x.author == this.$route.params.name;
-    });
-
-    if (result.lenght !== 0 && result.lenght !== "undefined") {
-      console.log(result[0].quote);
-    } else {
-      console.log("Sorry No Quote Was Found");
-    }
-
-    // console.log(result[0].quote);
+      await axios
+        .get(url)
+        .then(function (res) {
+          let val = res.data[0];
+          // console.log(val.quote);
+          this.quotes = val.quote;
+          this.loading = true;
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    },
   },
+
+  // created: function () {
+  //   let data = Object.entries(this.$store.getters.getQuotes).map((e) => ({
+  //     [e[0]]: e[1],
+  //   }));
+
+  //   let author = this.$route.params.name.replace(/ /g, "+");
+  //   console.log(typeof data);
+
+  //   // let result = data.filter((x) => {
+  //   //   return x.author == author;
+  //   // });
+
+  //   var results = [];
+  //   var searchField = "author";
+  //   var searchVal = author;
+  //   for (var i = 0; i < obj.list.length; i++) {
+  //     if (Object.list[i][searchField] == searchVal) {
+  //       results.push(obj.list[i]);
+  //     }
+  //   }
+
+  //   console.log(result);
+  //   console.log(author);
+  // },
 };
 </script>
 

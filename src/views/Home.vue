@@ -12,7 +12,7 @@
         <div class="character">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <router-link
-              v-for="x in values"
+              v-for="x in getValues"
               :key="x.char_id"
               :to="{
                 name: 'character.details',
@@ -99,14 +99,12 @@ export default {
     };
   },
   created() {
-    // this.$store.dispatch("getCharacter").then((response) => {
-    //   console.log(response);
-    // });
+    this.$store.dispatch("getCharacter");
   },
   computed: {
-    // featuredRooms() {
-    //   return this.$store.getters.getList;
-    // },
+    getValues() {
+      return this.$store.getters.getList;
+    },
   },
 };
 </script>
