@@ -16,7 +16,7 @@
               :key="x.char_id"
               :to="{
                 name: 'character.details',
-                params: { id: x.char_id, name: x.name },
+                params: { id: x.char_id },
               }"
             >
               <figure class="bg-gray-100 rounded-xl py-10 mx-8 md:mx-4">
@@ -49,58 +49,13 @@
 export default {
   name: "Home",
   data() {
-    return {
-      values: [
-        {
-          char_id: 37,
-          name: "Bogdan Wolynetz",
-          birthday: null,
-          occupation: ["Former owner of A1A Car Wash"],
-          img: "https://i.pinimg.com/originals/d5/c0/34/d5c0345ae70fbdbaa33b7537d685da54.jpg",
-          status: "Alive",
-          nickname: "Bogdan",
-          appearance: [1, 3, 4],
-          portrayed: "Marius Stan",
-          category: "Breaking Bad",
-          better_call_saul_appearance: null,
-        },
-        {
-          char_id: 3,
-          name: "Skyler White",
-          birthday: "1970-08-11T00:00:00.000Z",
-          occupation: [
-            "House wife",
-            " Book Keeper",
-            " Car Wash Manager",
-            " Taxi Dispatcher",
-          ],
-          img: "https://s-i.huffpost.com/gen/1317262/images/o-ANNA-GUNN-facebook.jpg",
-          status: "Alive",
-          nickname: "Sky",
-          appearance: [1, 2, 3, 4, 5],
-          portrayed: "Anna Gunn",
-          category: "Breaking Bad",
-          better_call_saul_appearance: null,
-        },
-        {
-          char_id: 2,
-          name: "Jesse Pinkman",
-          birthday: "1984-09-24T00:00:00.000Z",
-          occupation: ["Meth Dealer"],
-          img: "https://vignette.wikia.nocookie.net/breakingbad/images/9/95/JesseS5.jpg/revision/latest?cb=20120620012441",
-          status: "Alive",
-          nickname: "Cap n' Cook",
-          appearance: [1, 2, 3, 4, 5],
-          portrayed: "Aaron Paul",
-          category: "Breaking Bad",
-          better_call_saul_appearance: null,
-        },
-      ],
-    };
+    return {};
   },
+
   created() {
     this.$store.dispatch("getCharacter");
   },
+
   computed: {
     getValues() {
       return this.$store.getters.getList;

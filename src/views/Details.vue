@@ -28,7 +28,7 @@
           md:mx-auto
         "
       >
-        <div class="md:px-8">
+        <div class="text-center md:px-8">
           <button
             class="
               bg-blue-500
@@ -41,11 +41,11 @@
             "
             @click="getQuote()"
           >
-            See Quote
+            {{ loadingtxt }}
           </button>
           <transition name="bounce">
             <blockquote v-if="loading">
-              <p class="text-lg font-semibold">“{{ quotes }}”</p>
+              <p class="text-lg font-semibold">“{{ quotes[0].quote }}”</p>
             </blockquote>
           </transition>
         </div>
@@ -66,7 +66,7 @@
             </div>
             <div>
               Birthday:
-              {{ new Date(getDetails.birthday).toISOString().substring(0, 10) }}
+              {{ getBirthday(getDetails.birthday) }}
             </div>
             <div>Portrayed: {{ getDetails.portrayed }}</div>
             <div>Existence : {{ getDetails.status }}</div>
@@ -99,75 +99,56 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "Info",
+
   data() {
     return {
       loading: false,
-      quotes: "",
+      quotes: [],
+      loadingtxt: "See Quote",
     };
   },
+
+  created() {
+    this.$store.dispatch("getDetails", this.$route.params.id);
+  },
+
   computed: {
     getDetails() {
-      let data = this.$store.getters.getDetails;
-
-      let result = data.filter((x) => {
-        return x.char_id == this.$route.params.id;
-      });
-
-      this.name = result[0].name;
-
-      return result[0];
+      return this.$store.getters.getDetails;
     },
   },
+
+  mounted() {},
 
   methods: {
-    async getQuote() {
-      this.loading = false;
-      let author = this.$route.params.name.replace(/ /g, "+");
-      let url = `https://www.breakingbadapi.com/api/quote/random?author=${author}`;
+    getBirthday(date) {
+      var options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      var today = new Date(date);
+      return today.toLocaleDateString("en-US", options);
+    },
 
-      await axios
-        .get(url)
-        .then(function (res) {
-          let val = res.data[0];
-          // console.log(val.quote);
-          this.quotes = val.quote;
-          this.loading = true;
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
+    getQuote() {
+      this.loading = false;
+      this.loadingtxt = "Loading...";
+      let name = this.getDetails.name.replace(/ /g, "+");
+
+      this.$store.dispatch("getQuote", name).then((res) => {
+        this.quotes = res;
+        this.loading = true;
+        this.loadingtxt = "See Quote";
+      });
+
+      setTimeout(() => {
+        this.loading = false;
+      }, 3000);
     },
   },
-
-  // created: function () {
-  //   let data = Object.entries(this.$store.getters.getQuotes).map((e) => ({
-  //     [e[0]]: e[1],
-  //   }));
-
-  //   let author = this.$route.params.name.replace(/ /g, "+");
-  //   console.log(typeof data);
-
-  //   // let result = data.filter((x) => {
-  //   //   return x.author == author;
-  //   // });
-
-  //   var results = [];
-  //   var searchField = "author";
-  //   var searchVal = author;
-  //   for (var i = 0; i < obj.list.length; i++) {
-  //     if (Object.list[i][searchField] == searchVal) {
-  //       results.push(obj.list[i]);
-  //     }
-  //   }
-
-  //   console.log(result);
-  //   console.log(author);
-  // },
 };
 </script>
 

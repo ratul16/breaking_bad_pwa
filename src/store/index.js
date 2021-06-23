@@ -6,39 +6,28 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentCharacter: {},
     character: [],
-    quotes: [
-      {
-        "quote_id": 3,
-        "quote": "The next time you bring a gun to a job without telling me, I will stick it up your ass sideways.",
-        "author": "Skyler White",
-        "series": "Breaking Bad"
-      },
-      {
-        "quote_id": 9,
-        "quote": "Funyuns are awesome.",
-        "author": "Jesse Pinkman",
-        "series": "Breaking Bad"
-      },
-      {
-        "quote_id": 77,
-        "quote": "IFT",
-        "author": "Mike Ehrmantraut",
-        "series": "Breaking Bad"
-      },
-    ],
+    quotes: [],
   },
   mutations: {
 
     setCharacter(state, payload) {
       state.character = payload;
     },
+
+    setDetails(state, payload) {
+      state.currentCharacter = payload[0];
+    },
+
     setQuote(state, payload) {
       state.quotes = payload;
     }
 
   },
   actions: {
+
+    // Character list request
     async getCharacter(context) {
       await axios.get('https://www.breakingbadapi.com/api/characters?limit=4')
         .then(function (res) {
@@ -51,11 +40,13 @@ export default new Vuex.Store({
         });
     },
 
-    async getQuote(context) {
-      await axios.get('https://www.breakingbadapi.com/api/quotes')
+
+    // Character detail request
+    async getDetails(context, payload) {
+      await axios.get(`https://www.breakingbadapi.com/api/characters/${payload}`)
         .then(function (res) {
-          // console.log(res);
-          context.commit('setQuote', res.data);
+          // console.log(res.data.[0]);
+          context.commit('setDetails', res.data);
         })
         .catch(function (error) {
           // handle error
@@ -63,7 +54,33 @@ export default new Vuex.Store({
         });
     },
 
+    // Character quote request
+    async getQuote(context, payload) {
+
+      return new Promise((resolve, reject) => {
+
+        axios({
+          method: "get",
+          url: `https://www.breakingbadapi.com/api/quote/random?author=${payload}`,
+        })
+          .then(response => {
+            const data = response.data;
+            resolve(data);
+          })
+          .catch(error => {
+            console.log(error);
+
+            reject(error);
+          });
+
+      });
+
+    },
+
   },
+
+
+
   getters: {
 
     getList: state => state.character.map((x) => {
@@ -77,7 +94,7 @@ export default new Vuex.Store({
     }),
 
     getDetails: (state) => {
-      return state.character;
+      return state.currentCharacter;
     },
 
     getQuotes: (state) => {
