@@ -1,8 +1,5 @@
 <template>
   <div>
-    <header class="text-center bg-yellow-400 text-black py-4 font-bold">
-      <router-link to="/">Breaking Bad</router-link>
-    </header>
     <router-view />
   </div>
 </template>

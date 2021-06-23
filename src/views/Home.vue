@@ -2,15 +2,18 @@
   <div class="home">
     <div class="hero-section">
       <div class="container mx-auto">
-        <div class="hero-text text-xl font-semibold">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-          facilis dolor corporis blanditiis dolores magnam, provident libero
-          fugit dignissimos vero magni porro ad nobis maxime voluptate iusto sed
-          minima. Voluptas!
+        <img
+          class="cover shadow-xl rounded-b-xl"
+          src="@/assets/background.jpg"
+          height="512"
+          alt=""
+        />
+        <div class="hero-text text-center text-2xl font-semibold my-12">
+          Series Characters
         </div>
 
-        <div class="character">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="character mb-4">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <router-link
               v-for="x in getValues"
               :key="x.char_id"
@@ -19,14 +22,26 @@
                 params: { id: x.char_id },
               }"
             >
-              <figure class="bg-gray-100 rounded-xl py-10 mx-8 md:mx-4">
-                <img
-                  class="w-32 h-32 mx-auto rounded-full"
-                  :src="x.img"
-                  alt=""
-                  width="384"
-                  height="512"
-                />
+              <figure
+                class="
+                  shadow-lg
+                  md:shadow-2xl
+                  border-l-4 border-r-4 border-yellow-400
+                  rounded-b-xl
+                  pb-10
+                  mx-8
+                  md:mx-4
+                "
+              >
+                <div class="profile mx-auto">
+                  <img
+                    class="rounded-full"
+                    :src="x.img"
+                    alt=""
+                    width="384"
+                    height="512"
+                  />
+                </div>
                 <div class="pt-6 space-y-4 text-center">
                   <figcaption>
                     <div class="font-bold">{{ x.name }} ({{ x.nickname }})</div>
@@ -65,15 +80,31 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="css">
 .home {
   position: relative;
 }
 
 .hero-section {
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  background: center center no-repeat url("~@/assets/background.jpg");
-  background-size: cover;
+}
+
+.cover {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.profile {
+  height: 200px;
+  width: 200px;
+}
+
+.profile img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 </style>
