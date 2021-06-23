@@ -5,6 +5,8 @@
 </template>
 
 <style>
+@import "./assets/tailwind.min.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
