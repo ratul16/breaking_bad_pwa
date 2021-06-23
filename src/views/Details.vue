@@ -45,7 +45,7 @@
           </button>
           <transition name="bounce">
             <blockquote v-if="loading">
-              <p class="text-lg font-semibold">“{{ quotes[0].quote }}”</p>
+              <p class="text-lg font-semibold">“{{ quotes }}”</p>
             </blockquote>
           </transition>
         </div>
@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       loading: false,
-      quotes: [],
+      quotes: "",
       loadingtxt: "See Quote",
     };
   },
@@ -139,7 +139,7 @@ export default {
       let name = this.getDetails.name.replace(/ /g, "+");
 
       this.$store.dispatch("getQuote", name).then((res) => {
-        this.quotes = res;
+        this.quotes = !res.length ? "Sorry no Quote found" : res[0].quote;
         this.loading = true;
         this.loadingtxt = "See Quote";
       });
