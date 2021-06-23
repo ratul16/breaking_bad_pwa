@@ -110,7 +110,7 @@
               shadow-lg
             "
           >
-            Back
+            Back to home
           </button>
         </router-link>
       </div>
