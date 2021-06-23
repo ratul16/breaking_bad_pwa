@@ -95,16 +95,4 @@ export default {
   height: 400px;
   object-fit: cover;
 }
-
-.profile {
-  height: 200px;
-  width: 200px;
-}
-
-.profile img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: top;
-}
 </style>

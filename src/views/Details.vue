@@ -1,22 +1,25 @@
 <template>
   <div class="details container mx-auto">
     <div class="bio md:w-2/3">
-      <img
+      <div
         class="
+          profile
+          rounded-lg
+          mb-4
+          border-l-4 border-r-4 border-yellow-400
+          shadow-xl
           mx-auto
           md:mx-0
-          w-60
-          h-60
-          rounded-lg
-          shadow-xl
-          border-l-8 border-yellow-400
-          mb-2
         "
-        :src="getDetails.img"
-        alt=""
-        width="384"
-        height="512"
-      />
+      >
+        <img
+          class="rounded-lg"
+          :src="getDetails.img"
+          alt=""
+          width="384"
+          height="512"
+        />
+      </div>
 
       <figure
         class="
@@ -24,15 +27,15 @@
           rounded-xl
           p-6
           border-4 border-yellow-400
-          mx-8
+          mx-6
           md:mx-auto
         "
       >
-        <div class="text-center md:px-8">
+        <div class="mx-auto md:mx-0 md:px-8">
           <button
             class="
-              bg-blue-500
-              hover:bg-blue-700
+              bg-yellow-500
+              hover:bg-yellow-700
               text-white
               font-bold
               py-2
@@ -50,42 +53,40 @@
           </transition>
         </div>
         <div
-          class="
-            pt-6
-            md:p-8
-            text-center
-            md:text-left
-            grid grid-cols-1
-            md:grid-cols-2
-            gap-4
-          "
+          class="pt-6 md:p-8 md:text-left grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <figcaption class="text-lg">
             <div class="font-bold">
               {{ getDetails.name }} ({{ getDetails.nickname }})
             </div>
             <div>
-              Birthday:
+              <span class="font-semibold">Birthday:</span>
               {{ getBirthday(getDetails.birthday) }}
             </div>
-            <div>Portrayed: {{ getDetails.portrayed }}</div>
-            <div>Existence : {{ getDetails.status }}</div>
+            <div>
+              <span class="font-semibold">Portrayed:</span>
+              {{ getDetails.portrayed }}
+            </div>
+            <div>
+              <span class="font-semibold">Existence :</span>
+              {{ getDetails.status }}
+            </div>
           </figcaption>
 
           <figcaption class="text-lg">
             <div>
-              Appeared In Season:
+              <span class="font-semibold">Appeared In Season:</span>
               <span v-for="x in getDetails.appearance" :key="x">
                 {{ x }},
               </span>
             </div>
             <div>
-              Occupation:
+              <span class="font-semibold">Occupation:</span>
               <span v-for="x in getDetails.occupation" :key="x">
                 {{ x }},
               </span>
             </div>
-            <div class="text-3xl">
+            <div class="text-xl">
               From
               <span class="font-semibold text-yellow-400">{{
                 getDetails.category
@@ -94,6 +95,25 @@
           </figcaption>
         </div>
       </figure>
+      <div class="text-center md:text-left mt-4">
+        <router-link to="/">
+          <button
+            class="
+              bg-red-500
+              hover:bg-red-700
+              text-white
+              font-bold
+              py-2
+              px-10
+              back
+              rounded
+              shadow-lg
+            "
+          >
+            Back
+          </button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

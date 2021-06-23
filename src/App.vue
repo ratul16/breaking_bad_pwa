@@ -13,16 +13,19 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+.profile {
+  height: 200px;
+  width: 200px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.profile img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.back {
+  width: 200px;
 }
 </style>
