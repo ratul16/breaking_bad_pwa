@@ -14,7 +14,7 @@ module.exports = {
                             statuses: [0, 200]
                         }
                     }
-                }
+                },
                 {
                     urlPattern: new RegExp('^https://www.breakingbadapi.com/api/quote/'),
                     handler: 'networkFirst',
