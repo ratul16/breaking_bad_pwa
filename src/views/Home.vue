@@ -13,7 +13,7 @@
         </div>
 
         <div class="character mb-4">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
             <router-link
               v-for="x in getValues"
               :key="x.char_id"
@@ -24,11 +24,14 @@
             >
               <figure
                 class="
-                  shadow-lg
-                  md:shadow-2xl
+                  shadow
+                  transition
+                  duration-300
+                  ease-in-out
+                  hover:shadow-2xl
                   border-l-4 border-r-4 border-yellow-400
                   rounded-b-xl
-                  pb-10
+                  py-6
                   mx-8
                   md:mx-4
                 "

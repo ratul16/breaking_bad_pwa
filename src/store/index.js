@@ -29,7 +29,7 @@ export default new Vuex.Store({
 
     // Character list request
     async getCharacter(context) {
-      await axios.get('https://www.breakingbadapi.com/api/characters?limit=4')
+      await axios.get('https://www.breakingbadapi.com/api/characters?limit=8')
         .then(function (res) {
           // console.log(res);
           context.commit('setCharacter', res.data);
