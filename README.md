@@ -1,4 +1,4 @@
-# breaking_bad_pwaasds
+# breaking_bad_pwa
 
 ## Project setup
 ```
