@@ -6,9 +6,8 @@ module.exports = {
             runtimeCaching: [
                 {
                     urlPattern: new RegExp('^https://www.breakingbadapi.com/api/characters'),
-                    handler: 'networkFirst',
+                    handler: 'cacheFirst',
                     options: {
-                        networkTimeoutSeconds: 50,
                         cacheName: 'app-characters',
                         cacheableResponse: {
                             statuses: [0, 200]
@@ -17,10 +16,21 @@ module.exports = {
                 },
                 {
                     urlPattern: new RegExp('^https://www.breakingbadapi.com/api/quote/'),
-                    handler: 'networkFirst',
+                    handler: 'cacheFirst',
                     options: {
-                        networkTimeoutSeconds: 50,
                         cacheName: 'app-quote',
+                        cacheableResponse: {
+                            statuses: [0, 200]
+                        }
+                    }
+                },
+
+                // Testing Umage Caching by file extension
+                {
+                    urlPattern: new RegExp('/.(png|jpg|jpeg|svg)$/'),
+                    handler: 'cacheFirst',
+                    options: {
+                        cacheName: 'images',
                         cacheableResponse: {
                             statuses: [0, 200]
                         }
